@@ -39,7 +39,7 @@ class Config:
                 or "1070" in self.gpu_name
                 or "1080" in self.gpu_name
             ):
-                print("16系/10系显卡和P40强制单精度")
+                print("16-series/10-series graphics cards and P40 forced to single-precision")
                 self.is_half = False
                 for config_file in ["32k.json", "40k.json", "48k.json"]:
                     with open(f"configs/{config_file}", "r") as f:
@@ -65,10 +65,10 @@ class Config:
                 with open("trainset_preprocess_pipeline_print.py", "w") as f:
                     f.write(strr)
         elif torch.backends.mps.is_available():
-            print("没有发现支持的N卡, 使用MPS进行推理")
+            print("No supported Nvidia card found, using MPS for inference")
             self.device = "mps"
         else:
-            print("没有发现支持的N卡, 使用CPU进行推理")
+            print("No supported Nvidia card found, using CPU for inference")
             self.device = "cpu"
             self.is_half = True
 
@@ -76,13 +76,13 @@ class Config:
             self.n_cpu = cpu_count()
 
         if self.is_half:
-            # 6G显存配置
+            # 6G VRAM Configuration
             x_pad = 3
             x_query = 10
             x_center = 60
             x_max = 65
         else:
-            # 5G显存配置
+            # 5G VRAM Configuration
             x_pad = 1
             x_query = 6
             x_center = 38
@@ -176,7 +176,7 @@ def vc_single(
         )
         if file_index != ""
         else file_index2
-    )  # 防止小白写错，自动帮他替换掉
+    )  # To prevent newbies from making mistakes, automatically replace it for them
     # file_big_npy = (
     #     file_big_npy.strip(" ").strip('"').strip("\n").strip('"').strip(" ")
     # )
